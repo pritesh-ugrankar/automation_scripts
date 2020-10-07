@@ -7,23 +7,31 @@ use Encode qw/decode/;
 use Email::Stuffer;
 use Email::Sender::Transport::SMTP ();
 use Cwd;
-######################################################################
+#######################################################################
 
-#############################################
-#Script reads the username, password and 
-#email server from a separate config file.
+#######################################################################
+#Script reads the username, password and email server from a separate 
+#config file. Config::Tiny module is used for this purpose.
+#
 #Please install Config::Tiny like so:
 #cpanm Config::Tiny
-#Refer to Config::Tiny documentation for
-#how to set up the config file.
-#############################################
+#Example of file is given below
+#
+#[params]
+#vnxe_username = username 
+#vnxe_passwd= password 
+#vnxe_ip = 192.168.1.2
+#Save the above file with the name vnxe_config.conf and ENSURE THAT
+#THE ABSOLUTE PATH is provided in the script.
+#Refer to Config::Tiny documentation for further details.
+#######################################################################
 my $array_creds = Config::Tiny->new();
-$array_creds   = Config::Tiny->read('vnxe_config.conf');
+$array_creds   = Config::Tiny->read('absolute\path\to\vnxe_config.conf');
 my $mailserver = $array_creds->{params}->{smtp_server_name};
 my $username   = $array_creds->{params}->{vnxe_username}; 
 my $password   = $array_creds->{params}->{vnxe_passwd};
 my $vnxe_ip   = $array_creds->{params}->{vnxe_ip};
-
+######################################################################
 my $aref_cmd_genhealth = ['uemcli','-d',$vnxe_ip,'-u',$username,'-p',$password, '/sys/general','show','-detail'];
 my $aref_cmd_bat = ['uemcli', '-d', $vnxe_ip, '-u', $username, '-p', $password, '/env/bat', 'show', '-detail'];
 my $aref_cmd_ps = ['uemcli', '-d', $vnxe_ip, '-u', $username, '-p', $password, '/env/ps', 'show', '-detail'];
@@ -199,10 +207,11 @@ Email::Stuffer
 	->attach_file($iomod_file)
 	->attach_file($sp_file)
 	->attach_file($ssd_file)
-	->from('Array Serial No.<VNXe-Array-SN@email.com>')
+	->from('VNXe Array Name SN <VNXe-SN@email.com>')
 	->transport(Email::Sender::Transport::SMTP->new({
 				host => $mailserver,
 			}))
-	->to('team dl <teamdl@email.com')
+	->to('Team DL<teamdl@email.com>')
 	->send_or_die;
+
 

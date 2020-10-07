@@ -5,19 +5,27 @@ use Email::Sender::Transport::SMTP ();
 use Config::Tiny;
 use Cwd;
 
-#############################################
-#Script reads the username, password and 
-#email server from a separate config file.
+#######################################################################
+#Script reads the username, password and email server from a separate 
+#config file. Config::Tiny module is used for this purpose.
+#
 #Please install Config::Tiny like so:
 #cpanm Config::Tiny
-#Refer to Config::Tiny documentation for
-#how to set up the config file.
-#############################################
+#Example of file is given below
+#
+#[params]
+#clar_username = username 
+#clar_passwd= password 
+#clar_ip = 192.168.1.2
+#Save the above file with the name clar_config.conf and ENSURE THAT
+#THE ABSOLUTE PATH is provided in the script.
+#Refer to Config::Tiny documentation for further details.
+#######################################################################
 my $array_creds = Config::Tiny->new();
-$array_creds    = Config::Tiny->read('G:\clar_0035\clar_config.conf');
-my $array_ip    = $array_creds->{params}->{clar35_ip};
-my $username    = $array_creds->{params}->{username}; 
-my $password    = $array_creds->{params}->{password};
+$array_creds    = Config::Tiny->read('absolute\path\to\clar_config.conf');
+my $array_ip    = $array_creds->{params}->{clar_ip};
+my $username    = $array_creds->{params}->{clar_username}; 
+my $password    = $array_creds->{params}->{clar_passwd};
 my $mailserver  = $array_creds->{params}->{smtp_server_name};
 
 my $array_info = "array_info.txt";
