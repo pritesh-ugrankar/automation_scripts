@@ -20,9 +20,9 @@ use Cwd;
 my $array_creds = Config::Tiny->new();
 $array_creds   = Config::Tiny->read('vnxe_config.conf');
 my $mailserver = $array_creds->{params}->{smtp_server_name};
-my $username   = $array_creds->{params}->{username}; 
-my $password   = $array_creds->{params}->{pwd_cedar_rapids};
-my $vnxe_ip   = $array_creds->{params}->{vnxe_cedar_rapids_ip};
+my $username   = $array_creds->{params}->{vnxe_username}; 
+my $password   = $array_creds->{params}->{vnxe_passwd};
+my $vnxe_ip   = $array_creds->{params}->{vnxe_ip};
 
 my $aref_cmd_genhealth = ['uemcli','-d',$vnxe_ip,'-u',$username,'-p',$password, '/sys/general','show','-detail'];
 my $aref_cmd_bat = ['uemcli', '-d', $vnxe_ip, '-u', $username, '-p', $password, '/env/bat', 'show', '-detail'];
@@ -199,10 +199,10 @@ Email::Stuffer
 	->attach_file($iomod_file)
 	->attach_file($sp_file)
 	->attach_file($ssd_file)
-	->from('Cedar Rapids VNXe APM00114700894 <VNXe-APM00114700894@dxc.com>')
+	->from('Array Serial No.<VNXe-Array-SN@email.com>')
 	->transport(Email::Sender::Transport::SMTP->new({
-				host => 'smtp.mykft.net',
+				host => $mailserver,
 			}))
-	->to('Pritesh Ugrankar <pritesh.ugrankar@dxc.com>')
+	->to('team dl <teamdl@email.com')
 	->send_or_die;
 
