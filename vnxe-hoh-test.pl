@@ -13,30 +13,38 @@ my $href_anon_diskhash;
 my $id;
 my $subkey;
 my $subvalue;
+#######################################
+#Regex construction for extracting disk
+#fields and their corresponding values
+#from the input. 
+#######################################
+my $regex_4_disk_fields_descr = qr {  
+#The () around regex are used for capturing in the $1 or $2 etc.
+^\s+		# If the line begins with one or more spaces.
+([A-z ]+?)	# and is followed by alphabets - upper and lower case - and a space.Capture it in brackets.
+\s+		# And then one or more spaces,
+=		# followed by the = sign 
+\s		# followed by single space
+(.*)		#followed by anything.Capture it in brackets.
+\s+		#followed by one or more spaces
+}x;	        #/x allows to break the regex on multiple lines.
+		
+my $regex_4_disk_id_descr = qr {
+#The () around regex are used for capturing in the $1 or $2 etc.
+^([0-9]+)       #If the line starts with a number,Capture it in brackets.
+(.*)		#and some stuff after that,Capture it in brackets.
+}x;		#/x allows to break the regex on multiple lines.;
+
 {
 	while (my $line = <$fh_pd>) {
 		next if $line =~/^(storage|https)/i;
 		next if $line =~/^$/i;
 		
-		if ($line =~/	        #The () around regex are used for capturing in the $1 or $2 etc.
-			^([0-9]+)       #If the line starts with a number,
-			(.*)		#and some stuff after that,
-			/x		#/x allows to break the regex on multiple lines.
-		   ) 
-		
-		{
+		if ($line =~/$regex_4_disk_id_descr/) {
 			$id = $1;
-				}
-		if ($line =~/	        #The () around regex are used for capturing in the $1 or $2 etc.
-			^\s+		# If the line begins with one or more spaces.
-			([A-z ]+?)	# and is followed by alphabets - upper and lower case - and a space.
-			\s+		# And then one or more spaces,
-			=		# followed by the = sign 
-			\s		# followed by single space
-			(.*)		#followed by anything
-			\s+		#followed by one or more spaces
-			/x		#/x allows to break the regex on multiple lines.
-		   ) {		
+		}
+
+		if ($line =~/$regex_4_disk_fields_descr/) {		
 			$subkey = $1;
 			$subvalue = $2;
 		}
