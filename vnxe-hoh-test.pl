@@ -38,7 +38,7 @@ my $regex_4_disk_id_descr = qr {
 {
 	while (my $line = <$fh_pd>) {
 		next if $line =~/^(storage|https)/i;
-		next if $line =~/^$/i;
+		next if $line =~/^$/;
 		
 		if ($line =~/$regex_4_disk_id_descr/) {
 			$id = $1;
