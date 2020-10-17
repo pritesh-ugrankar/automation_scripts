@@ -1,8 +1,6 @@
 ################################################################
 =begin
-This script captures the data mover failover for EMC vnx.
-
-Note - This script captures the data mover status.
+This script captures the data mover status.
 
 There are 3 files required for this script.
 1) the IP Address file: In the example, the file is named as nas_array_ip_list.txt.
@@ -20,8 +18,9 @@ VNXE-NAS-ARRAY-2 192.168.1.13
 VNXE-NAS-ARRAY-3 192.168.1.14 
 VNXE-NAS-ARRAY-4 192.168.1.15 
 
+
 2) The second file is the one that contains the smtp server name,
-path to the 3par_array_ip_list file, the from and to email addresses,
+path to the vnxe_array_ip_list file, the from and to email addresses,
 the 3par command and username, password.
 [params]
 smtp_server_name = smtp.server.name.com
@@ -32,7 +31,8 @@ username = username
 password = passwd
 nas_command = /nas/sbin/getreason
 
-3) The 3par script file (This script file)
+
+3) This script file.
 =cut
 ##############################################################
 #!/usr/bin/perl
