@@ -12,11 +12,11 @@ logged out from 3PAR. This script contains 3 parts:
 #Please use tab or space to seperate the name and IP of the 3PAR Arrays.
 #
 ###############################################################
-3PARNAME-8400-DC 192.168.1.10  
-3PARNAME-8200-DC 192.168.1.11
-3PARNAME-8440-DC 192.168.1.12
-3PARNAME-20800-DC 192.168.1.13
-3PARNAME-20840-DC 192.168.1.14
+3PARNAME-8400-DC-NAME 192.168.1.10  
+3PARNAME-8200-DC-NAME 192.168.1.11
+3PARNAME-8440-DC-NAME 192.168.1.12
+3PARNAME-20800-DC-NAME 192.168.1.13
+3PARNAME-20840-DC-NAME 192.168.1.14
 ##############################################################
 
 2) The second file is the one that contains the smtp server name,
